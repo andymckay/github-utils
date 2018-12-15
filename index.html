@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="static/primer.css" rel="stylesheet">
+    <title>GitHub Utils</title>
+    <link rel="shortcut icon" href="/static/flame.svg">
+</head>
+
+<body>
+    <div class="pagehead bg-gray-dark text-white p-3">
+        <div class="container">
+            <h1>GitHub Utils</h1>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="tabnav">
+            <nav class="tabnav-tabs">
+                <a href="#reviews-count-wrapper" class="tabnav-tab" aria-current="page">Reviews</a>
+                <a href="#project-update-wrapper" class="tabnav-tab">Projects</a>
+            </nav>
+        </div>
+
+        <div class="wrapper">
+            <div class="blankslate">
+                <h3>No report selected</h3>
+                <p>Select a report from the tab above.</p>
+            </div>
+        </div>
+
+        <div id="reviews-count-wrapper" class="wrapper" style="display: none">
+            <h2>Reviews on repo</h2>
+            <p>Shows the number of reviews requested and completed on a repository.</p>
+            <form id="reviews-count" class="save-form">
+                <input class="form-control" type="text" name="org" placeholder="Owner">
+                <input class="form-control" type="text" name="repo" placeholder="Repo">
+                <button class="btn btn-outline" type="submit">Save</button>
+                <button class="btn btn-primary" type="submit" id="reviews-count-run">Run</button>
+            </form>
+        </div>
+
+        <div id="project-update-wrapper" class="wrapper" style="display: none">
+            <h2>Project updates</h2>
+            <p>Shows updates on project cards.</p>
+            <form id="project-update" class="save-form">
+                <input class="form-control" type="text" name="id" placeholder="Project Id">
+                <button class="btn btn-outline" type="submit">Save</button>
+                <button class="btn btn-primary" type="submit" id="project-update-run">Run</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <h2>Results</h2>
+        <p class="Label bg-blue" id="no-results">No results yet, run a report.</p>
+        <div class="markdown-body">
+            <table id="results">
+                <thead>
+
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+
+        <hr>
+
+        <form id="pat" class="save-form" style="display: none">
+            <label for="pat">Personal Access Token</label>
+            <input class="form-control" type="text" name="pat">
+            <button class="btn btn-outline" type="submit">Save</button>
+        </form>
+        <p>This is your personal access token for accessing GitHub using this API. It's stored in your browser and is sent on requests to GitHub.</p>
+        <button class="btn btn-outline" type="submit" id="show-pat">Show Personal Access Token</button>
+
+        <hr>
+
+        <p>A collection of barely working utilities using the GitHub API for my tasks and workflow. Fork me on
+            <a href="https://github.com/andymckay/github-utils">Github</a>.</p>
+    </div>
+
+    <script src="static/octokit-rest.js"></script>
+    <script src="static/site.js"></script>
+    <script src="static/moment.js"></script>
+    <script src="static/reviews.js"></script>
+    <script src="static/projects.js"></script>
+</body>
+
+</html>

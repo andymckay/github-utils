@@ -8,7 +8,7 @@ A collection of GitHub utilities that I use for working on GitHub regularly. Hop
 
 This directory contains a web page that uses the GitHub API to pull up some reports. You can access it at:
 
-
+https://andymckay.github.io/github-utils/
 
 
 Or by running:

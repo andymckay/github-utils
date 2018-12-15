@@ -61,7 +61,6 @@ function getOctoKit() {
 }
 
 function resultsReset() {
-    console.log('resultsReset!');
     table.getElementsByTagName('thead')[0].innerHTML = '';
     table.getElementsByTagName('tbody')[0].innerHTML = '';
 }

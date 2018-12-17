@@ -7,14 +7,15 @@ async function run() {
 
     let octokit = getOctoKit();
 
-    let pulls = await octokit.pulls.list({
+    let pulls = await octokit.paginate('GET /repos/:owner/:repo/pulls', ({
         owner: org,
-        repo: repo
-    })
+        repo: repo,
+        state: 'open'
+    }));
 
     resultsReset();
-    addResultColumns('Review', 'Reviews requested', 'Reviews completed');
-    for (let pull of pulls.data) {
+    addResultColumns('Review', 'Reviews requested', 'Reviews completed', 'Created at');
+    for (let pull of pulls) {
         let requested_reviewers = pull.requested_reviewers.length;
         let reviews = await octokit.pulls.listReviews({
             owner: org,
@@ -29,8 +30,9 @@ async function run() {
                 reviews_completed += 1;
             }
         }
+
         addResultRow(
-            pull.html_url, [`${pull.number}: ${pull.title}`, requested_reviewers, reviews_completed]
+            pull.html_url, [`${pull.number}: ${pull.title}`, requested_reviewers, reviews_completed, moment(pull.created_at)]
         );
     }
     reviewsRunButton.disabled = false;

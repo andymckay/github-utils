@@ -43,6 +43,7 @@
             <h2>Project updates</h2>
             <p>Shows updates on project cards.</p>
             <form id="project-update" class="save-form">
+                <input class="form-control" type="text" name="org" placeholder="Owner">
                 <input class="form-control" type="text" name="id" placeholder="Project Id">
                 <button class="btn btn-outline" type="submit">Save</button>
                 <button class="btn btn-primary" type="submit" id="project-update-run">Run</button>
@@ -80,11 +81,8 @@
             <a href="https://github.com/andymckay/github-utils">Github</a>.</p>
     </div>
 
-    <script src="static/octokit-rest.js"></script>
-    <script src="static/site.js"></script>
+    <script src="static/bundle.js"></script>
     <script src="static/moment.js"></script>
-    <script src="static/reviews.js"></script>
-    <script src="static/projects.js"></script>
 </body>
 
 </html>

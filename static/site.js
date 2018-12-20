@@ -1,3 +1,5 @@
+let graphql = require('@octokit/graphql');
+
 let table = document.getElementById('results');
 
 function save(event) {
@@ -42,21 +44,13 @@ function hashChangeEvent() {
     document.getElementById(hash.slice(1)).style.display = "block";
 }
 
-function getOctoKit() {
-    const octokit = new Octokit();
+function getGraphQL() {
     let pat = window.localStorage.getItem('pat:pat');
-
-    octokit.authenticate({
-        type: 'token',
-        token: pat
+    const octokit = graphql.defaults({
+        headers: {
+            authorization: `token ${pat}`
+        }
     })
-
-    octokit.hook.error('request', async(error, options) => {
-        alert('Got an error back from GitHub, check the console.');
-        console.log(error);
-        throw error
-    })
-
     return octokit;
 }
 
@@ -123,3 +117,5 @@ window.addEventListener("load", function(event) {
 });
 
 window.addEventListener("hashchange", hashChangeEvent);
+
+module.exports = { addResultColumns, addResultRow, resultsReset, getGraphQL }

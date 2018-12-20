@@ -1,39 +1,58 @@
+let site = require("./site");
 let projectRunButton = document.getElementById('project-update-run');
 
 async function run() {
     projectRunButton.disabled = true;
     let project_id = window.localStorage.getItem('project-update:id');
+    let org = window.localStorage.getItem('project-update:org');
 
-    let octokit = getOctoKit();
+    let graphql = site.getGraphQL();
 
-    let columns = await octokit.projects.listColumns({ project_id })
-
-    resultsReset();
-    addResultColumns('Card', 'Column', 'Last updated')
-    for (let column of columns.data) {
-        let cards = await octokit.projects.listCards({
-            column_id: column.id
-        })
-
-        for (let card of cards.data) {
-            if (!card.content_url) {
-                // This is a note, not an issue.
+    let response = await graphql(`query projectLookup($org: String!, $project_id: Int!) {
+        organization(login: $org) {
+          project(number: $project_id) {
+            columns(first: 100) {
+              nodes {
+                name
+                cards(first: 100) {
+                  nodes {
+                    id
+                    content {
+                      __typename
+                      ... on Issue {
+                        title
+                        url
+                        updatedAt
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `, {
+        org: org,
+        project_id: parseInt(project_id)
+    })
+    site.resultsReset();
+    site.addResultColumns('Card', 'Column', 'Last updated')
+    for (let column of response.data.organization.project.columns.nodes) {
+        for (let card of column.cards.nodes) {
+            let issue = card.content;
+            if (!issue) {
                 continue;
             }
-
-            let splitURL = card.content_url.split('/');
-            let issue = await octokit.issues.get({
-                owner: splitURL[4],
-                repo: splitURL[5],
-                number: splitURL[7]
-            })
-            addResultRow(
-                issue.data.html_url, [issue.data.title, column.name, moment(issue.data.updated_at).fromNow()]
-            )
+            site.addResultRow(
+                issue.url, [
+                    issue.title,
+                    column.name,
+                    moment(issue.updatedAt).fromNow()
+                ])
         }
     }
-
     projectRunButton.disabled = false;
-};
+}
 
 projectRunButton.addEventListener("click", run);

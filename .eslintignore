@@ -1,2 +1,1 @@
-static/moment.js
-static/octokit-rest.js
+dist/*.js

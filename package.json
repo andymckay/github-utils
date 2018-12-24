@@ -1,0 +1,25 @@
+{
+    "name": "github-utils",
+    "version": "1.0.0",
+    "description": "A collection of GitHub utilities that I use for working on GitHub regularly. Hopefully its useful to others.",
+    "main": ".eslintrc.js",
+    "dependencies": {
+        "@octokit/graphql": "^1.0.0",
+        "browserify": "^16.2.3"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "eslint .",
+        "build": "browserify static/*.js -o dist/bundle.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/andymckay/github-utils.git"
+    },
+    "author": "Andy McKay",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/andymckay/github-utils/issues"
+    },
+    "homepage": "https://github.com/andymckay/github-utils#readme"
+}

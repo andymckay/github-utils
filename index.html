@@ -2,9 +2,10 @@
 <html>
 
 <head>
-    <link href="static/primer.css" rel="stylesheet">
+    <link href="dist/primer.css" rel="stylesheet">
+    <link href="dist/site.css" rel="stylesheet">
     <title>GitHub Utils</title>
-    <link rel="shortcut icon" href="static/flame.svg">
+    <link rel="shortcut icon" href="dist/flame.svg">
 </head>
 
 <body>
@@ -16,8 +17,9 @@
     <div class="container mt-5">
         <div class="tabnav">
             <nav class="tabnav-tabs">
-                <a href="#reviews-count-wrapper" class="tabnav-tab" aria-current="page">Reviews</a>
+                <a href="#reviews-count-wrapper" class="tabnav-tab">Reviews</a>
                 <a href="#project-update-wrapper" class="tabnav-tab">Projects</a>
+                <a href="#team-status-wrapper" class="tabnav-tab">Teams</a>
             </nav>
         </div>
 
@@ -47,6 +49,17 @@
                 <input class="form-control" type="text" name="id" placeholder="Project Id">
                 <button class="btn btn-outline" type="submit">Save</button>
                 <button class="btn btn-primary" type="submit" id="project-update-run">Run</button>
+            </form>
+        </div>
+
+        <div id="team-status-wrapper" class="wrapper" style="display: none">
+            <h2>Team status</h2>
+            <p>Shows issues and PRs open for the team.</p>
+            <form id="team-status" class="save-form">
+                <input class="form-control" type="text" name="org" placeholder="Owner">
+                <input class="form-control" type="text" name="team" placeholder="Team name">
+                <button class="btn btn-outline" type="submit">Save</button>
+                <button class="btn btn-primary" type="submit" id="team-status-run">Run</button>
             </form>
         </div>
 
@@ -81,8 +94,7 @@
             <a href="https://github.com/andymckay/github-utils">Github</a>.</p>
     </div>
 
-    <script src="static/bundle.js"></script>
-    <script src="static/moment.js"></script>
+    <script src="dist/bundle.js"></script>
 </body>
 
 </html>

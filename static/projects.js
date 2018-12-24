@@ -1,10 +1,11 @@
+let moment = require("moment");
 let site = require("./site");
-let projectRunButton = document.getElementById('project-update-run');
+let projectRunButton = document.getElementById("project-update-run");
 
 async function run() {
     projectRunButton.disabled = true;
-    let project_id = window.localStorage.getItem('project-update:id');
-    let org = window.localStorage.getItem('project-update:org');
+    let project_id = window.localStorage.getItem("project-update:id");
+    let org = window.localStorage.getItem("project-update:org");
 
     let graphql = site.getGraphQL();
 
@@ -35,9 +36,9 @@ async function run() {
     `, {
         org: org,
         project_id: parseInt(project_id)
-    })
+    });
     site.resultsReset();
-    site.addResultColumns('Card', 'Column', 'Last updated')
+    site.addResultColumns("Card", "Column", "Last updated");
     for (let column of response.data.organization.project.columns.nodes) {
         for (let card of column.cards.nodes) {
             let issue = card.content;
@@ -49,7 +50,7 @@ async function run() {
                     issue.title,
                     column.name,
                     moment(issue.updatedAt).fromNow()
-                ])
+                ]);
         }
     }
     projectRunButton.disabled = false;

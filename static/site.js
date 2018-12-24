@@ -111,7 +111,6 @@ window.addEventListener("load", function() {
         form.addEventListener("submit", save);
     }
 
-
     hashChangeEvent();
     document.getElementById("show-pat").addEventListener("click", showPat);
 });

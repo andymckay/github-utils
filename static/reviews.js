@@ -9,60 +9,36 @@ async function run() {
 
     let graphql = await site.getGraphQL();
 
-    let response = await graphql(`query reviewsLookup($org: String!, $repo: String!) {
-        repository(owner: $org, name:$repo) {
-          pullRequests(last:20, states:OPEN, orderBy: {field: CREATED_AT, direction: DESC}) {
-            edges {
-              node {
-                title
-                url
-                number
-                createdAt
-                reviewRequests(first: 20) {
-                  edges {
-                    node {
-                      id
-                    }
-                  }
-                }
-                reviews(first:50) {
-                  edges {
-                    node {
-                      id
-                      state
-                    }
-                  }
+    let response = await graphql(`
+    query lookupMarkeptlaceListings {
+      organization(login: "github-interviews") {
+        repositories(last: 100) {
+          edges {
+            node {
+              nameWithOwner
+              collaborators(last: 100) {
+                nodes {
+                  login
                 }
               }
             }
           }
         }
       }
+    }
     `, {
         org: org,
         repo: repo
     });
 
-    site.resultsReset();
-    site.addResultColumns("Review", "Reviews requested", "Reviews completed", "Created at");
-
-    for (let pullRequest of response.data.repository.pullRequests.edges) {
-        let requested_reviewers = pullRequest.node.reviewRequests.edges.length;
-        let reviews_completed = 0;
-        for (let review of pullRequest.node.reviews.edges) {
-            if (["APPROVED", "CHANGES_REQUESTED"].includes(review.node.state)) {
-                requested_reviewers += 1;
-                reviews_completed += 1;
-            }
-        }
-        site.addResultRow(
-            pullRequest.node.url, [`${pullRequest.node.number}: ${pullRequest.node.title}`,
-                requested_reviewers,
-                reviews_completed,
-                moment(pullRequest.node.createdAt).format("ll")
-            ]
-        );
+    console.log('----');
+    for (let repo of response.data.organization.repositories.edges) {
+      console.log(repo.node);
+      console.log(repo.node.nameWithOwner);
+      console.log(repo.node.collaborators)
     }
+
+
     reviewsRunButton.disabled = false;
 }
 

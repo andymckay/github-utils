@@ -60,6 +60,7 @@ function resultsReset() {
 }
 
 function addResultColumns(...headers) {
+    headers.unshift("Count");
     for (let text of headers) {
         let header = document.createElement("th");
         header.innerText = text;
@@ -74,6 +75,10 @@ function addResultRow(url, fields) {
         let field = fields[k];
         let td = document.createElement("td");
         if (k == 0) {
+            let num = document.createElement("td");
+            num.innerText = table.getElementsByTagName("tr").length + 1;
+            row.appendChild(num);
+
             let a = document.createElement("a");
             a.href = url;
             a.innerText = field;

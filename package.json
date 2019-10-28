@@ -5,8 +5,8 @@
     "main": ".eslintrc.js",
     "dependencies": {
         "@octokit/graphql": "^1.0.0",
-        "browserify": "^16.2.3",
-        "moment": "^2.23.0"
+        "browserify": "^16.5.0",
+        "moment": "^2.24.0"
     },
     "devDependencies": {},
     "scripts": {

@@ -39,20 +39,28 @@ async function run() {
     });
     site.resultsReset();
     site.addResultColumns("Card", "Column", "Last updated");
+    let ordered = [];
     for (let column of response.data.organization.project.columns.nodes) {
         for (let card of column.cards.nodes) {
             let issue = card.content;
-            if (!issue) {
+            if (!issue || issue.__typename != "Issue") {
                 continue;
             }
-            site.addResultRow(
-                issue.url, [
-                    issue.title,
-                    column.name,
-                    moment(issue.updatedAt).fromNow()
-                ]);
+            ordered.push([issue.updatedAt, issue, column]);
         }
     }
+
+    ordered.sort(function(a, b) { return a[0] > b[0]; });
+    for (let result of ordered) {
+      let issue = result[1];
+      let column = result[2];
+      site.addResultRow(
+        issue.url, [
+          issue.title,
+          column.name,
+          moment(issue.updatedAt).fromNow()
+      ]);
+    };
     projectRunButton.disabled = false;
 }
 
